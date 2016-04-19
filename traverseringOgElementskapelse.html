@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traversering og elementskapelse</title>
+</head>
+
+<body>
+    
+    <h1>Traversering og elementskapelse</h1>
+    
+    <label>Antall div'er å generere
+        <input id="inputField" type="text"><!--User input-->
+    </label>
+    <input id="addBtn" class="txt" type="button" value="Generer"><!--addBtn-->
+    
+    <section id="manyDivSection"></section><!--New div's will come here-->
+    
+    
+    <script src="scripts/jquery-2.1.4.min.js"></script><!--Get script-->
+    
+    <script>
+        
+        $("#inputField").focus(); //Focus inputField
+    
+        $("#addBtn").click(function(){ //Function for click om addBtn
+            var newDiv = $("#inputField").val(); //Get value for inputField
+            
+            for(var i = 0; i < newDiv; i++){ //Create a new div with the value for the user
+                var $newDivBox = $("<div>").html(i + 1) //Set the number of each div/box
+                .css( //css for div's
+                    {
+                        "width": "80px",
+                        "height": "80px",
+                        "background-color": "rgb(128, 255, 255)",
+                        "float": "left",
+                        "margin": "15px",
+                        "opacity": "0.5"
+                    })
+                .css( //css on numbers
+                    {
+                        "color": "rgb(255, 255, 128)"
+                    });
+                
+                $("#manyDivSection").append($newDivBox); //Put the new div in #manyDivSection
+            }
+            
+            $("#inputField").val(""); //Remove text in inputField
+            
+            $("div").on({ //Many events on the same div
+                //When mouse is over div
+                mouseenter: function(){
+                    $(this).stop().fadeTo('slow', 1);
+                },
+                
+                //When mouse leavs div
+                mouseleave: function(){ 
+                    $(this).stop().fadeTo('slow', 0.5); 
+                },
+                
+                //When click on div
+                click: function(){ 
+                    $(this).stop().css('background-color', 'rgb(192, 128, 192)'),
+                        { queue: false }
+                    $(this).prev().stop().css('background-color', 'rgb(192, 128, 192)'),
+                        { queue: false }
+                    $(this).next().stop().css('background-color', 'rgb(192, 128, 192)');
+                },
+                
+                //When doubleclick om div
+                dblclick: function(){ 
+                    $(this).siblings().stop().css('background-color', 'rgb(154, 192, 143)');
+                }
+            });
+        });
+        
+    </script>   
+    
+</body>
+</html>
